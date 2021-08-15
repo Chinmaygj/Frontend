@@ -8,8 +8,9 @@ const Navbar =() => {
   const auth = useContext(AuthContext);
   const history = useHistory();
     function logoutRedirect(){
+        localStorage.clear("user")
         auth.logout()
-        history.push('/service')
+        history.push('/refresh')
     }
 
     return (

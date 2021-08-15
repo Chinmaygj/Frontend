@@ -2,7 +2,7 @@
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
 import Home from "./Home";
-import Contact from "./Contact";
+import Refresh from "./Refresh";
 import Service from "./Service";
 import Navbar from "./Navbar";
 import Breathe from "./Breathe";
@@ -21,12 +21,12 @@ const App =() => {
 
 
     const login= ()=>{
-      setIsLoggedIn(!isLoggedIn);
+      setIsLoggedIn(true);
 
     }
     const auth = useContext(AuthContext)
     const logout= ()=>{
-      setIsLoggedIn(!isLoggedIn);
+      setIsLoggedIn(false);
 
       
     }
@@ -51,7 +51,7 @@ const App =() => {
 
               <Route exact path= "/" component={Home} />
               <Route exact path= "/service" component={Service} />
-              <Route exact path= "/contact" component={Contact} />
+              <Route exact path= "/refresh" component={Refresh} />
 
               <Route exact path= "/breathe" component={Breathe} />
               <Redirect to="/" />

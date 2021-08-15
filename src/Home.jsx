@@ -18,7 +18,7 @@ const Home =() => {
   const [email,setEmail] = useState("");
   const [firstName,setFirstName] = useState("");
   const [lastName,setLastName] = useState("");
-
+  const [user,setUser] = useState({});
 
 
  /* function handleSubmit(event) {
@@ -49,12 +49,12 @@ const Home =() => {
     setFirstName(event.target.firstName.value);
     setLastName(event.target.lastName.value);
 
-    const user = {
+    const user = ({
       firstName : event.target.firstName.value,
       lastName:event.target.lastName.value,
       email:event.target.email.value,
 
-    };
+    });
 
     try {
         const response = await fetch('https://reqres.in/api/users',{
@@ -66,11 +66,13 @@ const Home =() => {
       })
       const responseData = await response.json()
       console.log(responseData)
+      console.log(user)
       if (responseData) {
         auth.login()
         setloginButton(false);
         console.log("logged");
         auth.setLoggedInUser(user)
+        localStorage.setItem("user",JSON.stringify(user))
         history.push('/service')
       }
       else {
@@ -138,6 +140,25 @@ const Home =() => {
     }
 
 };
+useEffect(() => {
+  const loggedInUser = localStorage.getItem("user")
+  if (loggedInUser && !auth.isLoggedIn) {
+    console.log(loggedInUser)
+    console.log("hiiiiiiiii")
+    auth.login()
+    setloginButton(false);
+    console.log("logged");
+    auth.setLoggedInUser(JSON.parse(loggedInUser))
+    console.log(auth.user)
+    history.push('/refresh')
+
+  }
+}, []); 
+
+//useEffect(() => {
+//  localStorage.setItem("user",JSON.stringify(user))
+//}, [loginButton]); 
+
  useEffect(() => {
     let interval;
 
@@ -150,6 +171,8 @@ const Home =() => {
     
     return () => clearInterval(interval);
   }, []); 
+
+
 
 
 
@@ -175,6 +198,7 @@ const Home =() => {
                                 {!auth.isLoggedIn ? <div className="mt-3">
                                     <button className="btn-get-started" onClick={()=>{setloginButton(true)}} > Login </button>
                                 </div>:null}
+
                            </div>
                            <div className="col-lg-6 order-1 order-lg-2 header-img">
                                 {((!auth.isLoggedIn && !loginButton)  || (auth.isLoggedIn && loginButton) || (auth.isLoggedIn && !loginButton)) && <div className="animation-two"><lottie-player className="animation-two" src="https://assets2.lottiefiles.com/packages/lf20_ocGoFt.json"  background="transparent"  speed="1"  style={{width: '450px', height: '450px'}}  loop  autoplay></lottie-player></div>}
@@ -202,6 +226,7 @@ const Home =() => {
 
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </section>

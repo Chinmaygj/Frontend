@@ -21,6 +21,7 @@ const Service =() => {
     console.log("hello");
   return <Redirect to='/' />
   }
+
     
     const handleTimeSubmit = async (event)=> {
         
