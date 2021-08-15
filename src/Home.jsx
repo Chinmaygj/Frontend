@@ -49,22 +49,24 @@ const Home =() => {
     setFirstName(event.target.firstName.value);
     setLastName(event.target.lastName.value);
 
-    const user = ({
+    const user ={
       firstName : event.target.firstName.value,
       lastName:event.target.lastName.value,
-      email:event.target.email.value,
+      username:event.target.email.value,
 
-    });
+    };
 
     try {
-        const response = await fetch('https://reqres.in/api/users',{
+        const responseData = await fetch('http://localhost:8080/userauthentication',{
         method:'POST',
+        mode : "cors",
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
       })
-      const responseData = await response.json()
+      console.log("api call",user)
+      // const responseData = await response.json()
       console.log(responseData)
       console.log(user)
       if (responseData) {
@@ -79,13 +81,10 @@ const Home =() => {
         console.log(responseData)
       }
     } catch (e) {
+      console.log(e);
       console.log("Failed to connect to server")
     }
   }
-
-
-
-
   const getNotification = async () => {
     console.log(auth.isLoggedIn)
     if (auth.isLoggedIn) {
@@ -186,13 +185,12 @@ useEffect(() => {
                         <div className="col-10 mx-auto">
                             <div className="row">
                             <div className="col-md-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex justify- content-center flex-column">
-                                {!auth.isLoggedIn ? <h1>
-                                     A healthy and happy body is worth the <strong className="brand-name"> Effort</strong>
+                                {!auth.isLoggedIn ? <h1 data-aos="fade-up" data-aos-once="true">
+                                  Take a <strong className="brand-name"> Break</strong> and give your soul what it needs. 
                                 </h1>:<h1>Hello <strong className="brand-name"> {auth.user.firstName} </strong> Welcome!! </h1>}
-
-
-                                <h2 className="my-3">
-                                    We are the team of talented developer making websites
+                                <h2  data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="my-3">
+                                When you’re striving to hit a deadline,
+                                Taking a much-needed break is essential if you want to perform at your best.
                                 </h2>
 
                                 {!auth.isLoggedIn ? <div className="mt-3">
@@ -201,7 +199,7 @@ useEffect(() => {
 
                            </div>
                            <div className="col-lg-6 order-1 order-lg-2 header-img">
-                                {((!auth.isLoggedIn && !loginButton)  || (auth.isLoggedIn && loginButton) || (auth.isLoggedIn && !loginButton)) && <div className="animation-two"><lottie-player className="animation-two" src="https://assets2.lottiefiles.com/packages/lf20_ocGoFt.json"  background="transparent"  speed="1"  style={{width: '450px', height: '450px'}}  loop  autoplay></lottie-player></div>}
+                                {((!auth.isLoggedIn && !loginButton)  || (auth.isLoggedIn && loginButton) || (auth.isLoggedIn && !loginButton)) && <div className="animation-two"><lottie-player className="animation-two" src="https://assets2.lottiefiles.com/packages/lf20_ocGoFt.json"  background="transparent"  speed="1"  style={{width: '500px', height: '500px'}}  loop  autoplay></lottie-player></div>}
                                 {(!auth.isLoggedIn && loginButton)  && <div class="text-center">
                                   <form onSubmit={submitHandler}>
                                   <div class="form-group">
@@ -248,7 +246,9 @@ useEffect(() => {
                 <div className="col-lg-6 card"  style={{borderLeftColor:'#24a0ed ',borderLeftWidth:'2px',borderLeftStyle:'solid'}}>
                   <h2 style={{color:'#24a0ed',marginTop:'5px'}}>Push Notification</h2>
                   <hr></hr>
-                  <p style={{color:'grey',fontSize:'1.2em'}}>lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum</p>
+                  <p style={{color:'grey',fontSize:'1.2em'}}>Forget to take a break when so many deadlines are racing against your timelines? 
+                  Don't worry we will notify you whenever you need to take a break. 
+                  Just subscribe your interests at our site and you are ready to be remembered about your breaks!!</p>
                 </div>
               </div>
 
@@ -256,7 +256,9 @@ useEffect(() => {
                 <div className="col-lg-6 card"  style={{borderLeftColor:'#24a0ed ',borderLeftWidth:'2px',borderLeftStyle:'solid'}}>
                   <h2 style={{color:'#24a0ed',marginTop:'5px'}}>We consider your interest</h2>
                   <hr></hr>
-                  <p style={{color:'grey',fontSize:'1.2em'}}>lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlo</p>
+                  <p style={{color:'grey',fontSize:'1.2em'}}>Just tell us which hobbies interests you the best at your leisure time. 
+                  It could be anything between yoga and meditation to calm you down or dancing and singing to energize you again for the next hours work. 
+                  Just with a simple subscription we are ready to notify you some fun activities.</p>
                 </div>
                 <div className="col-lg-6 ">
                   <img style={{width:'90%',objectFit:'cover'}} src={interest}  alt= "home img" />
