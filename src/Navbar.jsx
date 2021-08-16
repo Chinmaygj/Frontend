@@ -22,7 +22,7 @@ const Navbar =() => {
                     <nav className="navbar navbar-expand-lg navbar-light bg-dark">
                         <div className="container-fluid">
                             <NavLink className="navbar-brand"  to="/">
-                              <h1 className="brand">Break Time</h1>
+                              <h1 className="brand">TimePlease</h1>
                             </NavLink>
                             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
@@ -30,10 +30,10 @@ const Navbar =() => {
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav ml-auto mb-2 mb-lg-0"  >
                                 {auth.isLoggedIn ?<li className="nav-item">
-                                        <NavLink style={{color:'white'}} activeClassName='menu_active' exact className="nav-link active" aria-current="page" to="/service">Service</NavLink>
+                                        <NavLink style={{color:'white'}} activeClassName='menu_active' exact className="nav-link active" aria-current="page" to="/service">My Interests</NavLink>
                                     </li>:null}
                                     {auth.isLoggedIn ? <li className="nav-item">
-                                        <NavLink style={{color:'white'}} activeClassName='menu_active' className="nav-link" to="/breathe">Breathe</NavLink>
+                                        <NavLink style={{color:'white'}} activeClassName='menu_active' className="nav-link" to="/breathe">Meditate</NavLink>
                                     </li>:null}
 
                                     {auth.isLoggedIn ?  <li className="nav-item">
