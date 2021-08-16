@@ -80,7 +80,7 @@ const Home =() => {
   // }
   
     try {
-        const response = await fetch('http://localhost:8080/userauthentication',{
+        const response = await fetch('https://spring-dot-grads-coding-group-22.uc.r.appspot.com/userauthentication',{
         method:'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ const Home =() => {
       let notification=''
       let responseData
       try {
-      const response = await fetch(`http://localhost:8080/usernotification/${auth.user.email}`)
+      const response = await fetch(`https://spring-dot-grads-coding-group-22.uc.r.appspot.com/usernotification/${auth.user.email}`)
       responseData = await response.json()
       console.log(responseData)
       if (responseData) {

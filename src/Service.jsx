@@ -55,7 +55,7 @@ const Service =() => {
             }
             console.log(user);
             try {
-                const response = await fetch('http://localhost:8080/userinterests',{
+                const response = await fetch('https://spring-dot-grads-coding-group-22.uc.r.appspot.com/userinterests',{
                 method:'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ const Service =() => {
 
             }
             try {
-                const response = await fetch('http://localhost:8080/userschedule',{
+                const response = await fetch('https://spring-dot-grads-coding-group-22.uc.r.appspot.com/userschedule',{
                 method:'POST',
                 headers: {
                   'Content-Type': 'application/json'
