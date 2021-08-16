@@ -51,10 +51,11 @@ input[type=text], select, textarea {
   }
   
   .heading {
+    margin-top: 20px;
     width: 100%;
     margin-left: 1rem;
     font-weight: 900;
-    font-size: 1.618rem;
+    font-size: 2rem;
     text-transform: uppercase;
     letter-spacing: 0.1ch;
     line-height: 1;
@@ -79,7 +80,7 @@ input[type=text], select, textarea {
     margin-bottom: 3rem;
   }
   
-  .card {
+  .intrest_flip {
     color: inherit;
     cursor: pointer;
     width: calc(33% - 2rem);
@@ -90,15 +91,31 @@ input[type=text], select, textarea {
     margin: 1rem;
     position: relative;
   }
+  .coding{
+    width: 30%;
+    margin-top: 100px;
+    border: 2px solid #24a0ed;
+  }
+  .interval_button{
+    margin-top: 20px;
+  }
+  .interval_svg{
+    position: relative;
+    z-index: -1;
+    bottom: 300px;
+  }
   @media screen and (max-width: 800px) {
-    .card {
+    .intrest_flip {
       width: calc(50% - 2rem);
     }
   }
   @media screen and (max-width: 500px) {
-    .card {
+    .intrest_flip {
       width: 100%;
     }
+  }
+  body{
+    overflow-y: hidden;
   }
   
   .front,
@@ -140,10 +157,10 @@ input[type=text], select, textarea {
     opacity: 0.25;
     z-index: -1;
   }
-  .card:hover .front {
+  .intrest_flip:hover .front {
     transform: rotateY(180deg);
   }
-  .card:nth-child(even):hover .front {
+  .intrest_flip:nth-child(even):hover .front {
     transform: rotateY(-180deg);
   }
   
@@ -159,20 +176,20 @@ input[type=text], select, textarea {
     box-shadow: 0 0 10px 10px rgba(26, 87, 230, 0.25);
     background-color: rgba(26, 87, 230, 0.25);
   }
-  .card:hover .back {
+  .intrest_flip:hover .back {
     transform: rotateY(0deg);
   }
-  .card:nth-child(even) .back {
+  .intrest_flip:nth-child(even) .back {
     transform: rotateY(180deg);
   }
-  .card:nth-child(even) .back .button {
+  .intrest_flip:nth-child(even) .back .button {
     background: linear-gradient(135deg, #e61a80, #e61a3c);
   }
-  .card:nth-child(even) .back .button:before {
+  .intrest_flip:nth-child(even) .back .button:before {
     box-shadow: 0 0 10px 10px rgba(230, 26, 60, 0.25);
     background-color: rgba(230, 26, 60, 0.25);
   }
-  .card:nth-child(even):hover .back {
+  .intrest_flip:nth-child(even):hover .back {
     transform: rotateY(0deg);
   }
   

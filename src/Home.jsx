@@ -20,8 +20,6 @@ const Home =() => {
   const [lastName,setLastName] = useState("");
   const [user,setUser] = useState({});
   const [interestList,setInterestList] = useState([]);
-
-
  /* function handleSubmit(event) {
     event.preventDefault();
     console.log(event.target.email.value);
@@ -57,29 +55,29 @@ const Home =() => {
 
     };
 
-    try {
-      const response = await fetch(`http://localhost:8080/userauthentication/${auth.user.email}`)
+  //   try {
+  //     const response = await fetch(`http://localhost:8080/userauthentication/${auth.user.email}`)
 
-    // console.log("api call",user)
-    const responseData = await response.json()
-    console.log(responseData)
-    // console.log(user)
-    if (responseData.username) {
-      auth.login()
-      setloginButton(false);
-      console.log("logged");
-      auth.setLoggedInUser(user)
-      localStorage.setItem("user",JSON.stringify(user))
-      // history.push('/Refresh')
-      return 
-    }
-    else {
-      console.log(responseData)
-    }
-  } catch (e) {
-    console.log(e);
-    console.log("Failed to connect to server")
-  }
+  //   // console.log("api call",user)
+  //   const responseData = await response.json()
+  //   console.log(responseData)
+  //   // console.log(user)
+  //   if (responseData.username) {
+  //     auth.login()
+  //     setloginButton(false);
+  //     console.log("logged");
+  //     auth.setLoggedInUser(user)
+  //     localStorage.setItem("user",JSON.stringify(user))
+  //     history.push('/Refresh')
+  //     return 
+  //   }
+  //   else {
+  //     console.log(responseData)
+  //   }
+  // } catch (e) {
+  //   console.log(e);
+  //   console.log("Failed to connect to server")
+  // }
   
     try {
         const response = await fetch('http://localhost:8080/userauthentication',{
@@ -99,6 +97,7 @@ const Home =() => {
         console.log("logged");
         auth.setLoggedInUser(user)
         localStorage.setItem("user",JSON.stringify(user))
+        // localStorage.setItem("interval",JSON.stringify("5000"))
         history.push('/service')
       }
       else {
@@ -119,7 +118,9 @@ const Home =() => {
       responseData = await response.json()
       console.log(responseData)
       if (responseData) {
-        notification= "This is notification from api"
+        notification= responseData.notification;
+        setInterestList([...interestList, responseData.interest])
+        localStorage.setItem("interval",JSON.stringify(responseData.interval))
       }
       else {
         console.log(responseData)
@@ -129,30 +130,47 @@ const Home =() => {
     }
   
     const image = {
-      "music":"https://randomwordgenerator.com/img/picture-generator/film-102681_640.jpg",
-      "running":"https://randomwordgenerator.com/img/picture-generator/film-102681_640.jpg",
-      "yoga":"https://randomwordgenerator.com/img/picture-generator/film-102681_640.jpg",
-      "reading":"https://randomwordgenerator.com/img/picture-generator/film-102681_640.jpg",
-      "gaming":"https://randomwordgenerator.com/img/picture-generator/film-102681_640.jpg"         
+      "music":"https://static.vecteezy.com/system/resources/previews/001/923/794/non_2x/young-girl-listening-to-music-free-vector.jpg",
+      "dancing":"https://thumbs.dreamstime.com/b/street-dance-concept-flat-design-hip-hop-break-dancer-vernacular-dances-urban-contex-culture-entertainment-85715605.jpg",
+      "yoga":"https://cdn.pixabay.com/photo/2020/09/08/06/23/yoga-5553729_960_720.png",
+      "meditation":"https://thumbs.dreamstime.com/b/tree-yoga-pose-woman-silhouette-cliff-meditation-sunset-athletic-practicing-gymnastics-fitness-orange-yellow-sky-165957976.jpg",
+      "gardening":"https://www.handyman.net.au/wp-content/uploads/2019/11/garden-tools.jpg"         
     }
 
-    const Interest =["music","running","yoga","reading","gaming"]
-
-    var Notification_title;
+    const Interest =["music","dancing","yoga","meditation","gardening"]
+    var Notification_title 
     var Notification_image;
+    console.log(responseData)
+    if(!responseData){
+      Notification_title = "Stay Hydrated";
+      notification = "Relax and Get yourself a cup of water";
+      setInterestList([...interestList, "Relax"])
+      Notification_image = "https://thumbs.dreamstime.com/b/tree-yoga-pose-woman-silhouette-cliff-meditation-sunset-athletic-practicing-gymnastics-fitness-orange-yellow-sky-165957976.jpg"
+    }
+    else if(responseData.interest === "default" )
+    {
+      Notification_title = "Relax";
+      notification = responseData.notification;
+      Notification_image = "https://thumbs.dreamstime.com/b/tree-yoga-pose-woman-silhouette-cliff-meditation-sunset-athletic-practicing-gymnastics-fitness-orange-yellow-sky-165957976.jpg"
+    }
+    else{
+    Notification_title = responseData.interest;
+    
+    console.log(responseData);
     for (let index = 0; index < 6; index++) {
-      if("yoga" ===  Interest[index])                               // add responsedata
+      if(responseData.interest ===  Interest[index])                               // add responsedata
       {
             // console.log(responseData.interest)
-            Notification_title = Interest[index]
+            // Notification_title = Interest[index]
             Notification_image = image[Interest[index]]
       }
     }
+  }
       addNotification({
         title: `${Notification_title}`,
         message: `${notification}`,
         theme: 'darkblue',
-        backgroundBottom:"https://randomwordgenerator.com/img/picture-generator/film-102681_640.jpg",
+        // backgroundBottom:"https://randomwordgenerator.com/img/picture-generator/film-102681_640.jpg",
         duration: 7000,
         icon:`${Notification_image}`,
         backgroundTop: 'green',
@@ -167,11 +185,11 @@ const Home =() => {
 useEffect(() => {
   const loggedInUser = localStorage.getItem("user")
   const getinterest = localStorage.getItem("interest")
+  
 
  if (getinterest) {
   console.log(JSON.parse(localStorage.getItem("interest")))
   setInterestList([...interestList, ...JSON.parse(localStorage.getItem("interest"))])
-  console.log(typeof(interestList))
  }
 
   if (loggedInUser && !auth.isLoggedIn) {
@@ -193,12 +211,24 @@ useEffect(() => {
 
  useEffect(() => {
     let interval;
-
+    // var BreakInterval
+    
+    // if(JSON.parse(localStorage.getItem("interval"))){
+    //   BreakInterval = JSON.parse(localStorage.getItem("interval"))
+    // }
+    // else{
+    //   BreakInterval = 5000
+    // }
       interval = setInterval(() => {
+        if(localStorage.getItem("interval"))
+        {
+          console.log("this is present")
+        }
+        // BreakInterval = JSON.parse(localStorage.getItem("interval"))
         console.log('In setInterval');
           getNotification();
     
-      }, 5000);
+      }, localStorage.getItem("interval")?parseInt(JSON.parse(localStorage.getItem("interval")))*1000:5000);
 
     
     return () => clearInterval(interval);
@@ -216,30 +246,31 @@ useEffect(() => {
                             <div className="col-md-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex justify- content-center flex-column">
                                 {!auth.isLoggedIn ? <h1 data-aos="fade-up" data-aos-once="true">
                                   Take a <strong className="brand-name"> Break</strong> and give your soul what it needs. 
-                                </h1>:<div> <h1>Hello <strong className="brand-name"> {auth.user.firstName} </strong> Welcome!! </h1> {interestList.map((ele)=>{return <li>{ele}</li>})}</div>}
+                                </h1>:<div> <h1>Hello <strong className="brand-name"> {auth.user.firstName} </strong> Welcome!! We will Notify you based on your Interests</h1> 
+                                
+                                <div >{interestList.map((ele)=>{return <h2><li style={{listStyleType:"none",color:"#24a0ed"}}>{ele.toUpperCase()}</li></h2>})}</div>
+                                </div>}
                                 <h2  data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="my-3">
                                 When you’re striving to hit a deadline,
                                 Taking a much-needed break is essential if you want to perform at your best.
                                 </h2>
 
-                                {!auth.isLoggedIn ? <div className="mt-3">
+                                {!auth.isLoggedIn ? <div className="mt-3" data-aos="fade-up" data-aos-once="true" data-aos-delay = "400">
                                     <button className="btn-get-started" onClick={()=>{setloginButton(true)}} > Login </button>
                                 </div>:null}
-
                            </div>
-                           <div className="col-lg-6 order-1 order-lg-2 header-img">
+                           <div className="col-lg-6 order-1 order-lg-2 header-img" data-aos="fade-down">
                                 {((!auth.isLoggedIn && !loginButton)  || (auth.isLoggedIn && loginButton) || (auth.isLoggedIn && !loginButton)) && <div className="animation-two"><lottie-player className="animation-two" src="https://assets2.lottiefiles.com/packages/lf20_ocGoFt.json"  background="transparent"  speed="1"  style={{width: '500px', height: '500px'}}  loop  autoplay></lottie-player></div>}
-                                {(!auth.isLoggedIn && loginButton)  && <div class="text-center">
-                                  <form onSubmit={submitHandler}>
-                                  <div class="form-group">
+                                {(!auth.isLoggedIn && loginButton)  && <div class="text-left" style={{width:"65%",marginLeft:"40px"}}>
+                                  <form data-aos="fade-down" onSubmit={submitHandler}>
+                                  <div class="form-group" >
                                       <label for="exampleInputEmail1">Email address</label>
                                       <input type="email" class="form-control" id="exampleInputEmail1" required name="email" placeholder="Enter email"/>
                                       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                   </div>
                                   <div class="form-group">
                                       <label >First Name</label>
-                                      <input type="firstName" class="form-control"  name="firstName" required placeholder="Enter First Name"/>
-                                     
+                                      <input type="firstName" class="form-control"  name="firstName" required placeholder="Enter First Name"/>  
                                   </div>
                                   <div class="form-group">
                                       <label >Last Name</label>
@@ -249,8 +280,6 @@ useEffect(() => {
                                   </form>
                                </div>}
                             </div>
-
-
                             </div>
                         </div>
                         
