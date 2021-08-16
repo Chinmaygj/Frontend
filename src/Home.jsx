@@ -19,6 +19,7 @@ const Home =() => {
   const [firstName,setFirstName] = useState("");
   const [lastName,setLastName] = useState("");
   const [user,setUser] = useState({});
+  const [interestList,setInterestList] = useState([]);
 
 
  /* function handleSubmit(event) {
@@ -50,25 +51,48 @@ const Home =() => {
     setLastName(event.target.lastName.value);
 
     const user ={
-      firstName : event.target.firstName.value,
-      lastName:event.target.lastName.value,
+      firstname : event.target.firstName.value,
+      lastname:event.target.lastName.value,
       username:event.target.email.value,
 
     };
 
     try {
-        const responseData = await fetch('http://localhost:8080/userauthentication',{
+      const response = await fetch(`http://localhost:8080/userauthentication/${auth.user.email}`)
+
+    // console.log("api call",user)
+    const responseData = await response.json()
+    console.log(responseData)
+    // console.log(user)
+    if (responseData.username) {
+      auth.login()
+      setloginButton(false);
+      console.log("logged");
+      auth.setLoggedInUser(user)
+      localStorage.setItem("user",JSON.stringify(user))
+      // history.push('/Refresh')
+      return 
+    }
+    else {
+      console.log(responseData)
+    }
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to connect to server")
+  }
+  
+    try {
+        const response = await fetch('http://localhost:8080/userauthentication',{
         method:'POST',
-        mode : "cors",
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
       })
-      console.log("api call",user)
-      // const responseData = await response.json()
+      // console.log("api call",user)
+      const responseData = await response.json()
       console.log(responseData)
-      console.log(user)
+      // console.log(user)
       if (responseData) {
         auth.login()
         setloginButton(false);
@@ -89,10 +113,10 @@ const Home =() => {
     console.log(auth.isLoggedIn)
     if (auth.isLoggedIn) {
       let notification=''
-      //call to notification api route goes here...
+      let responseData
       try {
-        const response = await fetch(`https://reqres.in/api/users/${auth.user.email}`)
-      const responseData = await response.json()
+      const response = await fetch(`http://localhost:8080/usernotification/${auth.user.email}`)
+      responseData = await response.json()
       console.log(responseData)
       if (responseData) {
         notification= "This is notification from api"
@@ -112,15 +136,16 @@ const Home =() => {
       "gaming":"https://randomwordgenerator.com/img/picture-generator/film-102681_640.jpg"         
     }
 
-    const Intrest =["music","running","yoga","reading","gaming"]
+    const Interest =["music","running","yoga","reading","gaming"]
 
     var Notification_title;
     var Notification_image;
     for (let index = 0; index < 6; index++) {
-      if("yoga" ==  Intrest[index])                               // add responsedata
+      if("yoga" ===  Interest[index])                               // add responsedata
       {
-            Notification_title = Intrest[index]
-            Notification_image = image[Intrest[index]]
+            // console.log(responseData.interest)
+            Notification_title = Interest[index]
+            Notification_image = image[Interest[index]]
       }
     }
       addNotification({
@@ -141,6 +166,14 @@ const Home =() => {
 };
 useEffect(() => {
   const loggedInUser = localStorage.getItem("user")
+  const getinterest = localStorage.getItem("interest")
+
+ if (getinterest) {
+  console.log(JSON.parse(localStorage.getItem("interest")))
+  setInterestList([...interestList, ...JSON.parse(localStorage.getItem("interest"))])
+  console.log(typeof(interestList))
+ }
+
   if (loggedInUser && !auth.isLoggedIn) {
     console.log(loggedInUser)
     console.log("hiiiiiiiii")
@@ -172,10 +205,6 @@ useEffect(() => {
   }, []); 
 
 
-
-
-
-
     return (
         <>
             <section id="header" className="d-flex align-items-center">
@@ -187,7 +216,7 @@ useEffect(() => {
                             <div className="col-md-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex justify- content-center flex-column">
                                 {!auth.isLoggedIn ? <h1 data-aos="fade-up" data-aos-once="true">
                                   Take a <strong className="brand-name"> Break</strong> and give your soul what it needs. 
-                                </h1>:<h1>Hello <strong className="brand-name"> {auth.user.firstName} </strong> Welcome!! </h1>}
+                                </h1>:<div> <h1>Hello <strong className="brand-name"> {auth.user.firstName} </strong> Welcome!! </h1> {interestList.map((ele)=>{return <li>{ele}</li>})}</div>}
                                 <h2  data-aos="fade-up" data-aos-delay="300" data-aos-once="true" className="my-3">
                                 When you’re striving to hit a deadline,
                                 Taking a much-needed break is essential if you want to perform at your best.

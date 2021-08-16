@@ -46,14 +46,16 @@ const Service =() => {
         {
             setShowinterest(false);
             setShowform(true);
+            localStorage.setItem("interest",JSON.stringify(interest))
 
             const user = {
                 username : auth.user.email,
                 interestname : interest
 
             }
+            console.log(user);
             try {
-                const response = await fetch('https://reqres.in/api/users',{
+                const response = await fetch('http://localhost:8080/userinterests',{
                 method:'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -81,14 +83,14 @@ const Service =() => {
             
             const user = {
                 username : auth.user.email,
-                interestname : interest,
+                // interestname : interest,
                 startTime : StartTime,
                 endTime : EndTime,
                 interval : Interval
 
             }
             try {
-                const response = await fetch('https://reqres.in/api/users',{
+                const response = await fetch('http://localhost:8080/userschedule',{
                 method:'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -119,12 +121,12 @@ const Service =() => {
                     <Form.Group size="lg" controlId="StartTime">
                     <Form.Label>StartTime</Form.Label>
                     <Form.Control
+                    required
                     autoFocus
-                    type="Time"
+                    type="Time" placeholder="Enter StartTime(HH:MM:SS)"
                     step = "1"
                     value={StartTime}
                     name = "StartTime"
-                    required
                     onChange={(e) => setStartTime(e.target.value)}
                     />
                     </Form.Group>
@@ -132,7 +134,8 @@ const Service =() => {
                     <Form.Label>EndTime</Form.Label>
                     <Form.Control
                     autoFocus
-                    type="Time"
+                    required
+                    type="Time" placeholder="Enter EndTime(HH:MM:SS)"
                     step = "1"
                     value={EndTime}
                     name = "EndTime"
@@ -144,7 +147,8 @@ const Service =() => {
                     <Form.Label>Interval</Form.Label>
                     <Form.Control
                     autoFocus
-                    type="text"
+                    required
+                    type="text" placeholder="Enter Interval in seconds"
                     value={Interval}
                     name = "Interval"
                     required

@@ -34,11 +34,10 @@ const App =() => {
     const setLoggedInUser=(lUser)=>{
 
       setUser({
-        email:lUser.email,
-        firstName:lUser.firstName,
-        lastName:lUser.lastName
+        email:lUser.username,
+        firstName:lUser.firstname,
+        lastName:lUser.lastname
       })
-      console.log(user);
     }
 
 
