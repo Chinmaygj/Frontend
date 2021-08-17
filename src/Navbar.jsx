@@ -19,7 +19,7 @@ const Navbar =() => {
         <div className="nav_bg">
             <div className="row">
                 <div>
-                    <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+                    <nav className="navbar navbar-expand-lg navbar-light">
                         <div className="container-fluid">
                             <NavLink className="navbar-brand"  to="/">
                               <h1 className="brand">TimePlease</h1>

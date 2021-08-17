@@ -228,7 +228,7 @@ useEffect(() => {
         console.log('In setInterval');
           getNotification();
     
-      }, localStorage.getItem("interval")?parseInt(JSON.parse(localStorage.getItem("interval")))*1000:5000);
+      }, localStorage.getItem("interval")?parseInt(JSON.parse(localStorage.getItem("interval")))*1000:10000);
 
     
     return () => clearInterval(interval);
@@ -339,7 +339,7 @@ useEffect(() => {
                 <div  style={{paddingTop:'5.5em'}}>
                   <h3> Made with love ♥</h3>
                   <br/>
-                  <p style={{color:'#24a0ed', letterSpacing:"5px"}}>© ℗ ® ™ Copyright 2021 OurBrand</p>
+                  <p style={{color:'#24a0ed', letterSpacing:"5px"}}>© ℗ ® ™ Copyright 2021 TimePlease</p>
                 </div>
             </section>
 

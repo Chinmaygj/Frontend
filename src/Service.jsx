@@ -172,7 +172,7 @@ const Service =() => {
               showinterest &&
             <div className="content" >
         <h1 className="heading">What Interests do you want?</h1>
-        <p className="description">We'll use them to notifiy you with best interests.</p><a className="intrest_flip" href="#!">
+        <p className="description">We'll use them to notifiy you with best interests.</p><a className="intrest_flip">
           <div className="front" style={{backgroundImage: `url(${Dancing})`}}>
             <p>Dancing</p>
           </div>
@@ -183,7 +183,7 @@ const Service =() => {
               // onClick={() => setButtonTextDancing("Subscribed")}
               >{buttonTextDancing}</button>
             </div>
-          </div></a><a className="intrest_flip" href="#!">
+          </div></a><a className="intrest_flip" >
           <div className="front" style={{backgroundImage: `url(${Meditate})`}}>
             <p>Meditation</p>
           </div>
@@ -194,7 +194,7 @@ const Service =() => {
               // onClick={() => setButtonTextMeditation("Subscribed")}
               >{buttonTextMeditation}</button>
             </div>
-          </div></a><a className="intrest_flip" href="#!">
+          </div></a><a className="intrest_flip">
           <div className="front" required style={{backgroundImage: `url(${Gardening})`}}>
             <p>Gardening</p>
           </div>
@@ -205,7 +205,7 @@ const Service =() => {
             // onClick={() => setButtonTextGardening("Subscribed")}
             >{buttonTextGardening}</button>
             </div>
-          </div></a><a className="intrest_flip" href="#!">
+          </div></a><a className="intrest_flip">
           <div className="front" style={{backgroundImage: `url(${Reading})`}}>
             <p>Yoga</p>
           </div>
@@ -216,7 +216,7 @@ const Service =() => {
               // onClick={() => setButtonTextReading("Subscribed")}
               >{buttonTextReading}</button>
             </div>
-          </div></a><a className="intrest_flip" href="#!">
+          </div></a><a className="intrest_flip" >
           <div className="front" style={{backgroundImage: `url(${Music})`}}>
             <p>Listening Music</p>
           </div>
